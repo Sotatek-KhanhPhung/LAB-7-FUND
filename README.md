@@ -89,7 +89,7 @@ sudo systemctl status redis
 ```
 
 - **Bước 3:** Tạo dữ liệu để test backup
-Truy cập vào ```sh redis-cli ```
+Truy cập vào ```redis-cli```
 ```sh
 FLUSHALL
 SET user:1 'Khanh'
@@ -114,7 +114,8 @@ sudo cp /var/lib/redis/dump.rdb /var/backups/redis/dump-$(date +%F-%H%M%S).rdb
 ```
 
 - **Bước 4:** Test mất dữ liệu và restore trên cùng server
-Xoá tất cả dữ liệu bằng lệnh ```sh FLUSHALL ``` rồi check xem còn key nào tồn tại không ```sh KEYS * ```
+Xoá tất cả dữ liệu bằng lệnh ```FLUSHALL``` rồi check xem còn key nào tồn tại không ```KEYS *
+```
 Stop Redis
 ```sh
 sudo systemctl stop redis
@@ -158,7 +159,8 @@ sudo systemctl status redis
 ```
 
 - **Bước 2:** Thay đổi cấu hình trên Master
-**NOTE**: Copy file config gốc của Redis (redis.conf) sang 1 file khác (redis.conf.origin)
+
+**NOTE**: Copy file config gốc của Redis (```redis.conf```) sang 1 file khác (```redis.conf.origin```)
 ```sh
 sudo nano /etc/redis/redis.conf
 ```
@@ -189,7 +191,7 @@ Restart Redis
 ```sh
 sudo systemctl restart redis
 ```
-Check Replica Status: Phải hiện master_host, master_port và hiện master_link_status: up
+Check Replica Status: Phải hiện ```master_host```, ```master_port``` và hiện ```master_link_status: up```
 ```sh
 redis-cli info replication
 ```
