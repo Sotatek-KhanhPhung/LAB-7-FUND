@@ -39,12 +39,12 @@ AUTH your_password
 ```
 
 ### 1.3. Cài đặt kiểu lưu dữ liệu (AOF / RDB)
-- Sửa file config 
+Sửa file config 
 **NOTE**: Copy file config gốc sang 1 file khác
 ```sh
 sudo nano /etc/redis/redis.conf
 ```
-    - RDB Snapshot (Redis Database Snapshot)
+RDB Snapshot (Redis Database Snapshot)
 ```sh
 save 3600 1		        #Trong 3600 giây nếu có ít nhất 1 key thay đổi, lưu toàn bộ db
 save 300 100	        #Trong 300 giây nếu có ít nhất 100 key thay đổi, lưu toàn bộ db 
@@ -52,7 +52,7 @@ save 60 10000	        #Trong 60 giây nếu có ít nhất 10000 key thay đổi
 dbfilename dump.rdb	    #Tên file RDB
 dir /var/lib/redis	    #Vị trí lưu file RDB
 ```
-    - AOF (Append-only File)
+AOF (Append-only File)
 ```sh
 appendonly yes				        #Bật tính năng lưu dữ liệu kiểu AOF
 appendfsync everysec			    #Thiết lập tần suất ghi file AOF
@@ -82,14 +82,14 @@ dbfilename dump.rdb
 # Thư mực chứa file RDB
 dir /var/lib/redis
 ```
-    - Sau khi thay đổi cấu hình, restart Redis và check status
+Sau khi thay đổi cấu hình, restart Redis và check status
 ```sh
 sudo systemctl restart redis
 sudo systemctl status redis
 ```
 
 - Bước 3: Tạo dữ liệu để test backup
-    - Truy cập vào ```sh redis-cli ```
+Truy cập vào ```sh redis-cli ```
 ```sh
 FLUSHALL
 SET user:1 'Khanh'
@@ -100,12 +100,12 @@ LPUSH tasks 'task1' 'task2' 'task3' 'task4' 'task5'
 INCR counts
 ```
 
-    - Tạo snapshot
+Tạo snapshot
 ```sh
 BGSAVE
 ```
 
-    - Lưu file RDB sang thư mục backup
+Lưu file RDB sang thư mục backup
 ```sh
 sudo mkdir -p /var/backups/redis
 sudo chown redis:redis /var/backups/redis
@@ -114,16 +114,16 @@ sudo cp /var/lib/redis/dump.rdb /var/backups/redis/dump-$(date +%F-%H%M%S).rdb
 ```
 
 - Bước 4: Test mất dữ liệu và restore trên cùng server
-    - Xoá tất cả dữ liệu bằng lệnh ```sh FLUSHALL ``` rồi check xem còn key nào tồn tại không ```sh KEYS * ```
-    - Stop Redis
+Xoá tất cả dữ liệu bằng lệnh ```sh FLUSHALL ``` rồi check xem còn key nào tồn tại không ```sh KEYS * ```
+Stop Redis
 ```sh
 sudo systemctl stop redis
 ```
-    - Copy lại file dump từ thư mục Backups vào đúng vị trí rồi đổi lại tên thành dumb.rdb
+Copy lại file dump từ thư mục Backups vào đúng vị trí rồi đổi lại tên thành dumb.rdb
 ```sh
 cp /var/backups/redis/dumb_file_name /var/lib/redis/dumb.rdb
 ```
-    Khời động lại Redis và kiểm tra dữ liệu
+Khởi động lại Redis và kiểm tra dữ liệu
 ```sh
 sudo systemctl start redis
 ```
