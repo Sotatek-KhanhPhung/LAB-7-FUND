@@ -114,20 +114,22 @@ sudo cp /var/lib/redis/dump.rdb /var/backups/redis/dump-$(date +%F-%H%M%S).rdb
 ```
 
 - **Bước 4:** Test mất dữ liệu và restore trên cùng server
-Xoá tất cả dữ liệu bằng lệnh ```FLUSHALL``` rồi check xem còn key nào tồn tại không ```KEYS *
-```
+Xoá tất cả dữ liệu bằng lệnh ```FLUSHALL``` rồi check xem còn key nào tồn tại không ```KEYS *```
 Stop Redis
 ```sh
 sudo systemctl stop redis
 ```
+
 Copy lại file dump từ thư mục Backups vào đúng vị trí rồi đổi lại tên thành dumb.rdb
 ```sh
 cp /var/backups/redis/dumb_file_name /var/lib/redis/dumb.rdb
 ```
+
 Khởi động lại Redis và kiểm tra dữ liệu
 ```sh
 sudo systemctl start redis
 ```
+
 ```sh
 redis-cli
 
